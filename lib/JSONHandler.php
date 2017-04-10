@@ -59,6 +59,7 @@ class JSONHandler extends MovieHandler {
 		  $params->skipTranscoded = Param('skipTranscoded') ? 1 : 0;
 		  $params->skipHasCutlist = Param('skipHasCutlist') ? 1 : 0;
 		  $params->skipLiveTV = Param('skipLiveTV') ? 1 : 0;
+		  $params->skipRecording = Param('skipRecording') ? 1 : 0;
 		  $params->hpp = (int)Param('hpp') > 0 && (int)Param('hpp') <= 1000 ? 
 				 (int)Param('hpp') :
 				 HPP;
@@ -67,13 +68,17 @@ class JSONHandler extends MovieHandler {
 
 		$q = new Query("select title, chanid,
 				             unix_timestamp(starttime) as unix,
-					     /* CONVERT_TZ('startime','UTC','SYSTEM') as unix, */
+					     /* unix_timestamp(CONVERT_TZ(starttime,'UTC','SYSTEM')) as unix, */
 				             filesize
 				        from recorded  r
 				       where deletepending = 0");
 	
 		if($params->skipLiveTV) {
                         $q->Append(" and not storagegroup = 'LiveTV'");
+		}
+
+		if($params->skipRecording) {
+                        $q->Append(" and not exists (select 1 from oldrecorded o where o.recstatus = '-2' and o.starttime=r.progstart)");
 		}
 
 		if($params->skipTranscoded) {
@@ -153,6 +158,7 @@ class JSONHandler extends MovieHandler {
 		if(count($movies_to_load) > 0) {
 			$q = new Query("select r.subtitle, r.description, r.chanid,
 							  	   unix_timestamp(r.starttime) as unix,
+					                           /* unix_timestamp(CONVERT_TZ(starttime,'UTC','SYSTEM')) as unix, */
 							  	   c.name as channel,
 							  	   r.filesize							  	   
 							  from recorded r
