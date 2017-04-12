@@ -1,3 +1,12 @@
+0.18  2017-04-10
+* Added Skip In-Progress Recording Filter
+
+0.17  2016-05-05
+* Added Skip LiveTV Filter
+
+0.16  2013-01-28
+* Improved Logging, bugfixing
+
 0.15  2012-04-24
 * Commercial breaks now work
 * View recording date
