@@ -268,7 +268,8 @@ class Movie {
 	}
 
 	public function getStarttime() {
-		return date('d.m.Y H:i:s', $this->starttime);
+		// return date('d.m.Y H:i:s', $this->starttime);
+		return date('Y.m.d H:i:s', $this->starttime);
 	}
 
 	public function getStarttimeSQL() {

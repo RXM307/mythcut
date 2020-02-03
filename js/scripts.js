@@ -64,6 +64,9 @@
 	var i = parseInt(RegExp.$1);
 	var s = "new Date(" + i + ")";
 	var d = eval(s);
+        var tz = d.getTimezoneOffset();
+        var n = tz/60;
+        d.setHours(n);
 	return d.toLocaleDateString() + " " + d.toLocaleTimeString();
   }
 
