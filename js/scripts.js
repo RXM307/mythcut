@@ -68,6 +68,7 @@
         var n = tz/60;
         d.setHours(n);
 	return d.toLocaleDateString() + " " + d.toLocaleTimeString();
+        // return d.toLocaleString();
   }
 
 if(!console) {
