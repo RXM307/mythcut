@@ -60,11 +60,11 @@ class DB {
 		try {
 			$xmlreader = new SimpleXMLElement(CONFIG_XML, 0, true);
 			$dsn = sprintf('mysql:dbname=%s;host=%s',
-							$xmlreader->UPnP->MythFrontend->DefaultBackend->DBName,
-							$xmlreader->UPnP->MythFrontend->DefaultBackend->DBHostName);
+							$xmlreader->Database->DatabaseName,
+							$xmlreader->Database->Host);
 			
-			$user = $xmlreader->UPnP->MythFrontend->DefaultBackend->DBUserName;
-			$password = $xmlreader->UPnP->MythFrontend->DefaultBackend->DBPassword;
+			$user = $xmlreader->Database->UserName;
+			$password = $xmlreader->Database->Password;
 
 			self::Connect($dsn, $user, $password);
 		} catch (PDOException $e) {
